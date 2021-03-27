@@ -44,9 +44,7 @@ const onEnterSubmit = (event) => {
         fadeInOut();
         let city = viewElems.searchInput.value
         getWeatherByCity(city).then(data =>{
-            console.groupCollapsed(data);
-            switchView();
-            fadeInOut();
+            dispayWeatherData(data);            
         });
     }
 };
@@ -54,11 +52,31 @@ const onClickSubmit = () => {
     fadeInOut();
     let city = viewElems.searchInput.value
         getWeatherByCity(city).then(data =>{
-            console.groupCollapsed(data);
-            switchView();
-            fadeInOut();
+            dispayWeatherData(data);  
         });
 };
+
+const dispayWeatherData = data =>{
+    switchView();
+    fadeInOut();
+
+    const weather = data.consolidated_weather[0];
+    console.log(data);
+    console.log(weather);
+    viewElems.weatherCity.innerText= data.title ;
+    viewElems.weatherIcon.src=
+    `https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`;
+    viewElems.weatherIcon.alt=weather.weather_state_name;
+    viewElems.weatherIcon.width="150";
+    viewElems.weatherIcon.height="150";
+    const currTemp=weather.the_temp.toFixed(2);
+    const maxTemp =weather.max_temp.toFixed(2);
+    const minTemp =weather.min_temp.toFixed(2);
+
+    viewElems.weatherCurrentTemp.innerText=`Current temperature: ${currTemp}°C`;
+    viewElems.weatherMaxTemp.innerText=`Max temperature: ${maxTemp}°C`;
+    viewElems.weatherMinTemp.innerText=`Min temperature: ${minTemp}°C`;
+}
 
 const fadeInOut = () => {
     console.log('hello')
