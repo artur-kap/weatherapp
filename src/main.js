@@ -27,7 +27,12 @@ class WeatherApp{
             this.fadeInOut();
             let city = this.viewElems.searchInput.value
             getWeatherByCity(city).then(data =>{
+                this.viewElems.searchInput.style.borderColor ='black';
+                this.viewElems.searchInput.value="";
             this.dispayWeatherData(data);  
+            }).catch(() => {
+                this.fadeInOut();
+                this.viewElems.searchInput.style.borderColor ='red';
             });
         }
     };
@@ -83,21 +88,5 @@ class WeatherApp{
         this.viewElems.weatherMinTemp.innerText=`Min temperature: ${minTemp}°C`;
     }
 }
-
-
-
-const onClickSubmit = () => {
-    fadeInOut();
-    let city = viewElems.searchInput.value
-        getWeatherByCity(city).then(data =>{
-            dispayWeatherData(data);  
-        });
-};
-
-
-
-
-
-
 
 document.addEventListener('DOMContentLoaded',new WeatherApp())
